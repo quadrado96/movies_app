@@ -1,13 +1,13 @@
-package com.quadrado.movies_app.ui.dashboard
+package com.quadrado.movies_app.ui.search
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class SearchViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "pesquisa de filme"
     }
     val text: LiveData<String> = _text
 }
