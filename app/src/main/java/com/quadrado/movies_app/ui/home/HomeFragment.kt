@@ -4,17 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.quadrado.movies_app.databinding.FragmentHomeBinding
+import com.quadrado.movies_app.models.Movie
+import com.quadrado.movies_app.models.Category
+import com.quadrado.movies_app.adapters.CategoryAdapter
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -22,17 +21,31 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return binding.root
+    }
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val adapter = CategoryAdapter()
+        binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvCategories.adapter = adapter
+
+
+        val filmes = listOf(
+            Movie(id = 1, title = "Filme incrivel", posterUrl = "https://via.placeholder.com/300x450"),
+            Movie(id = 2, title = "Filme sensacional", posterUrl = "https://via.placeholder.com/300x450"),
+            Movie(id = 3, title = "Filme horrivel pqp", posterUrl = "https://via.placeholder.com/300x450")
+        )
+
+        val categorias = listOf(
+            Category("Ação", filmes),
+            Category("Comédia", filmes),
+            Category("Terror", filmes)
+        )
+
+        adapter.setData(categorias)
     }
 
     override fun onDestroyView() {
