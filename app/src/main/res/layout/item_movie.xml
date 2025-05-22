@@ -22,6 +22,7 @@
             android:layout_width="30dp"
             android:layout_height="44dp"
             android:layout_gravity="top|end"
+            android:background="#517BFA"
             android:backgroundTint="#517BFA"
             android:src="@drawable/ic_heart_add_line" />
     </FrameLayout>
