@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="120dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -19,32 +20,48 @@
         <ImageButton
             android:id="@+id/btn_favorito"
             android:layout_width="30dp"
-            android:layout_height="60dp"
+            android:layout_height="44dp"
             android:layout_gravity="top|end"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_heart_add_line"
-            android:backgroundTint="@color/black"
-             />
+            android:backgroundTint="#517BFA"
+            android:src="@drawable/ic_heart_add_line" />
     </FrameLayout>
 
     <TextView
         android:id="@+id/tv_titulo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Filme"
-        android:textSize="14sp"
-        android:textAlignment="viewStart"
-        android:maxLines="2"
+        android:layout_height="43dp"
         android:ellipsize="end"
-        android:paddingTop="4dp" />
+        android:gravity="start|center_vertical"
+        android:maxLines="2"
+        android:paddingStart="4dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="4dp"
+        android:text="Filme"
+        android:textAlignment="viewStart"
+        android:textSize="14sp" />
 
-    <TextView
-        android:id="@+id/tv_nota"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="viewEnd"
-        android:textSize="12sp"
-        android:textColor="@color/amarelo"
-        android:text="Nota" />
+        android:layout_height="20dp">
+
+        <TextView
+            android:id="@+id/tv_nota"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:paddingTop="3dp"
+            android:text="9.9"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/amarelo"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/img_estrela"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_star_fill" />
+
+    </FrameLayout>
+
 
 </LinearLayout>

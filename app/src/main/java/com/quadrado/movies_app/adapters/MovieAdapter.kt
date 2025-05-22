@@ -20,6 +20,7 @@ class MovieAdapter(
         val tvTitle: TextView = view.findViewById(R.id.tv_titulo)
         val tvRate: TextView = view.findViewById(R.id.tv_nota)
         val btnFavorite: ImageButton = view.findViewById(R.id.btn_favorito)
+        val imgStar: ImageView = view.findViewById(R.id.img_estrela)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
@@ -32,6 +33,11 @@ class MovieAdapter(
         val movie = movies[position]
 
         holder.tvTitle.text = movie.title
+        holder.tvRate.text = movie.rating.toString()
+
+        if(movie.rating < 5) {
+            holder.imgStar.setImageResource(R.drawable.ic_star_half_line)
+        }
 
         holder.btnFavorite.setOnClickListener {
             Toast.makeText(
