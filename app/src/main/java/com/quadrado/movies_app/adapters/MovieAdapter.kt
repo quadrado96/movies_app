@@ -1,5 +1,6 @@
 package com.quadrado.movies_app.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,17 +34,21 @@ class MovieAdapter(
         val movie = movies[position]
 
         holder.tvTitle.text = movie.title
-        holder.tvRate.text = movie.voteAverage.toString()
-
-        if(movie.voteAverage <= 5) {
+        holder.tvRate.text = String.format("%.1f", movie.voteAverage ?: 0.0)
+        
+        if ((movie.voteAverage ?: 0.0) <= 5) {
             holder.imgStar.setImageResource(R.drawable.ic_star_half_line)
+        } else {
+            holder.imgStar.setImageResource(R.drawable.ic_star_fill)
         }
 
+        Log.d("MovieAdapter", "Movie: ${movie.title} - Vote: ${movie.voteAverage}")
+
+
         holder.btnFavorite.setOnClickListener {
-            if(!movie.favorited!!) {
+            if(movie.favorited == false) {
                 movie.favorited = true
                 holder.btnFavorite.setImageResource(R.drawable.ic_heart_fill)
-
                 Toast.makeText(
                     holder.itemView.context,
                     "Salvo nos favoritos!",
@@ -52,7 +57,6 @@ class MovieAdapter(
             } else {
                 movie.favorited = false
                 holder.btnFavorite.setImageResource(R.drawable.ic_heart_add_line)
-
                 Toast.makeText(
                     holder.itemView.context,
                     "Removido dos favoritos!",

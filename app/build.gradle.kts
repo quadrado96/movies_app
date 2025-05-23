@@ -4,6 +4,8 @@ plugins {
     id("kotlin-parcelize")
 }
 
+val tmdbToken = project.findProperty("TMDB_API_TOKEN") as? String ?: ""
+
 android {
     namespace = "com.quadrado.movies_app"
     compileSdk = 35
@@ -14,7 +16,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "TMDB_API_TOKEN", "\"${project.properties["TMDB_API_TOKEN"]}\"")
+        buildConfigField("String", "TMDB_API_TOKEN", "\"$tmdbToken\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,6 +56,8 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    implementation("com.squareup.moshi:moshi:1.15.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

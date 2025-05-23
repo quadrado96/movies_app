@@ -11,4 +11,12 @@ interface MovieApiService {
         @Query("language") language: String = "pt-BR",
         @Query("page") page: Int = 1
     ): MovieResponse
+
+    @GET("discover/movie")
+    suspend fun getMoviesByGenre(
+        @Query("with_genres") genreId: Int,
+        @Query("language") language: String = "pt-BR",
+        @Query("page") page: Int = 1
+    ): MovieResponse
+
 }

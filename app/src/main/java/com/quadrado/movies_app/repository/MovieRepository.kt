@@ -10,4 +10,10 @@ class MovieRepository {
     suspend fun getPopularMovies(): MovieResponse {
         return api.getPopularMovies()
     }
+
+    suspend fun getMoviesByGenre(genreId: Int): MovieResponse {
+        return api.getMoviesByGenre(genreId)
+    }
+
+
 }

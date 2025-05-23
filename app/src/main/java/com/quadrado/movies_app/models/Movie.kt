@@ -9,6 +9,6 @@ data class Movie(
     val id: Int,
     val title: String,
     @Json(name = "poster_path") val posterPath: String?,
-    @Json(name = "vote_average") val voteAverage: Double,
+    @Json(name = "vote_average") val voteAverage: Double?,
     var favorited: Boolean? = false
 ) : Parcelable

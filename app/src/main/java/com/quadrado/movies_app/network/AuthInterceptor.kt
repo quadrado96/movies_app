@@ -1,5 +1,6 @@
 package com.quadrado.movies_app.network
 
+import android.util.Log
 import com.quadrado.movies_app.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -13,3 +14,4 @@ class AuthInterceptor : Interceptor {
         return chain.proceed(request)
     }
 }
+
