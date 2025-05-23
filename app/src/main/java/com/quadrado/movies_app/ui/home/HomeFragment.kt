@@ -34,12 +34,12 @@ class HomeFragment : Fragment() {
 
 
         val filmes = listOf(
-            Movie(id = 1, title = "Filme incrivel", posterUrl = "https://via.placeholder.com/300x450", 9.0),
-            Movie(id = 2, title = "Filme sensacional", posterUrl = "https://via.placeholder.com/300x450",10.0),
-            Movie(id = 3, title = "Filme horrivel pqp", posterUrl = "https://via.placeholder.com/300x450",2.0),
-            Movie(id = 4, title = "Filme mediano", posterUrl = "https://via.placeholder.com/300x450",3.4),
-            Movie(id = 5, title = "Filme dahorinha", posterUrl = "https://via.placeholder.com/300x450",6.5),
-            Movie(id = 6, title = "Filme sinistro", posterUrl = "https://via.placeholder.com/300x450",7.7),
+            Movie(id = 1, title = "Filme incrivel", posterPath = "https://via.placeholder.com/300x450", 9.0),
+            Movie(id = 2, title = "Filme sensacional", posterPath = "https://via.placeholder.com/300x450",10.0),
+            Movie(id = 3, title = "Filme horrivel pqp", posterPath = "https://via.placeholder.com/300x450",2.0),
+            Movie(id = 4, title = "Filme mediano", posterPath = "https://via.placeholder.com/300x450",3.4),
+            Movie(id = 5, title = "Filme dahorinha", posterPath = "https://via.placeholder.com/300x450",6.5),
+            Movie(id = 6, title = "Filme sinistro", posterPath = "https://via.placeholder.com/300x450",7.7),
 
         )
 

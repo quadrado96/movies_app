@@ -33,18 +33,32 @@ class MovieAdapter(
         val movie = movies[position]
 
         holder.tvTitle.text = movie.title
-        holder.tvRate.text = movie.rating.toString()
+        holder.tvRate.text = movie.voteAverage.toString()
 
-        if(movie.rating < 5) {
+        if(movie.voteAverage <= 5) {
             holder.imgStar.setImageResource(R.drawable.ic_star_half_line)
         }
 
         holder.btnFavorite.setOnClickListener {
-            Toast.makeText(
-                holder.itemView.context,
-                "testeeeeeeee",
-                Toast.LENGTH_SHORT
-            ).show()
+            if(!movie.favorited!!) {
+                movie.favorited = true
+                holder.btnFavorite.setImageResource(R.drawable.ic_heart_fill)
+
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Salvo nos favoritos!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                movie.favorited = false
+                holder.btnFavorite.setImageResource(R.drawable.ic_heart_add_line)
+
+                Toast.makeText(
+                    holder.itemView.context,
+                    "Removido dos favoritos!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
     }
 
