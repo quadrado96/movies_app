@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">movies_app</string>
     <string name="title_home">Home</string>
-    <string name="title_search">Search</string>
-    <string name="title_settings">Settings</string>
+    <string name="title_search">Buscar</string>
+    <string name="title_settings">Configurações</string>
+
+    <string name="filmes_favoritos">Filmes favoritos</string>
+    <string name="temas">temas</string>
+    <string name="sobre_o_app">Sobre o app</string>
 </resources>
