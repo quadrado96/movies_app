@@ -15,5 +15,18 @@ class MovieRepository {
         return api.getMoviesByGenre(genreId)
     }
 
+    suspend fun getTopRatedMovies(): MovieResponse {
+        return api.getTopRatedMovies()
+    }
+
+    suspend fun getNowPlayingMovies(): MovieResponse {
+        return api.getNowPlayingMovies()
+    }
+
+    suspend fun getUpcomingMovies(): MovieResponse {
+        return api.getUpcomingMovies()
+    }
+
+
 
 }

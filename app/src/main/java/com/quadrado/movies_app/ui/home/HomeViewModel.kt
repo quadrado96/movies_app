@@ -25,16 +25,40 @@ class HomeViewModel : ViewModel() {
     private val _horrorMovies = MutableStateFlow<List<Movie>>(emptyList())
     val horrorMovies: StateFlow<List<Movie>> = _horrorMovies
 
+    private val _romanceMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val romanceMovies: StateFlow<List<Movie>> = _romanceMovies
+
+    private val _adventureMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val adventureMovies: StateFlow<List<Movie>> = _adventureMovies
+
+    private val _fictionMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val fictionMovies: StateFlow<List<Movie>> = _fictionMovies
+
+    private val _animationMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val animationMovies: StateFlow<List<Movie>> = _animationMovies
+
+    private val _topRatedMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val topRatedMovies: StateFlow<List<Movie>> = _topRatedMovies
+
+    private val _nowPlayingMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val nowPlayingMovies: StateFlow<List<Movie>> = _nowPlayingMovies
+
+    private val _upcomingMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val upcomingMovies: StateFlow<List<Movie>> = _upcomingMovies
+
+
     init {
-        fetchPopularMovies()
+        fetchMovies()
         fetchAllGenres()
     }
 
-    private fun fetchPopularMovies() {
+    private fun fetchMovies() {
         viewModelScope.launch {
             try {
-                val response = repository.getPopularMovies()
-                _movies.value = response.results
+                _topRatedMovies.value = repository.getTopRatedMovies().results
+                _nowPlayingMovies.value = repository.getNowPlayingMovies().results
+                _upcomingMovies.value = repository.getUpcomingMovies().results
+                _movies.value = repository.getPopularMovies().results
             } catch (e: Exception) {
                 e.printStackTrace()
 
@@ -46,27 +70,20 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 val action = repository.getMoviesByGenre(28).results
-                action.forEach { movie ->
-                    Log.d("HomeViewModel", "Ação: ${movie.title} | Nota: ${movie.voteAverage}")
-                }
-
                 val comedy = repository.getMoviesByGenre(35).results
-                comedy.forEach { movie ->
-                    Log.d("HomeViewModel", "Comédia: ${movie.title} | Nota: ${movie.voteAverage}")
-                }
-
                 val horror = repository.getMoviesByGenre(27).results
-                horror.forEach { movie ->
-                    Log.d("HomeViewModel", "Terror: ${movie.title} | Nota: ${movie.voteAverage}")
-                }
-
-                Log.d("HomeViewModel", "Ação: ${action.size}")
-                Log.d("HomeViewModel", "Comédia: ${comedy.size}")
-                Log.d("HomeViewModel", "Terror: ${horror.size}")
+                val romance = repository.getMoviesByGenre(10749).results
+                val fiction = repository.getMoviesByGenre(878).results
+                val animation = repository.getMoviesByGenre(16).results
+                val adventure = repository.getMoviesByGenre(12).results
 
                 _actionMovies.value = action
                 _comedyMovies.value = comedy
                 _horrorMovies.value = horror
+                _romanceMovies.value = romance
+                _fictionMovies.value = fiction
+                _animationMovies.value = animation
+                _adventureMovies.value = adventure
 
             } catch (e: Exception) {
                 e.printStackTrace()

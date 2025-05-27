@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.quadrado.movies_app.databinding.FragmentHomeBinding
-import com.quadrado.movies_app.models.Movie
 import com.quadrado.movies_app.models.Category
 import com.quadrado.movies_app.adapters.CategoryAdapter
 import kotlinx.coroutines.flow.combine
@@ -39,20 +38,44 @@ class HomeFragment : Fragment() {
         binding.rvCategories.adapter = adapter
 
         lifecycleScope.launch {
-            combine(
+            val combine1 = combine(
+                viewModel.movies,
+                viewModel.topRatedMovies,
+                viewModel.nowPlayingMovies,
                 viewModel.actionMovies,
-                viewModel.comedyMovies,
-                viewModel.horrorMovies
-            ) { actionList, comedyList, horrorList ->
+                viewModel.comedyMovies
+            ) { moviesList, topRatedList, nowPlayingList, actionList, comedyList ->
+                listOf(moviesList, topRatedList, nowPlayingList, actionList, comedyList)
+            }
+
+            val combine2 = combine(
+                viewModel.horrorMovies,
+                viewModel.romanceMovies,
+                viewModel.fictionMovies,
+                viewModel.adventureMovies,
+                viewModel.animationMovies
+            ) { horrorList, romanceList, fictionList, adventureList, animationList ->
+                listOf(horrorList, romanceList, fictionList, adventureList, animationList)
+            }
+
+            combine(combine1, combine2) { list1, list2 ->
                 listOf(
-                    Category("Ação", actionList),
-                    Category("Comédia", comedyList),
-                    Category("Terror", horrorList)
+                    Category("Filmes populares", list1[0]),
+                    Category("Mais Avaliados", list1[1]),
+                    Category("Em cartaz", list1[2]),
+                    Category("Ação", list1[3]),
+                    Category("Comédia", list1[4]),
+                    Category("Terror", list2[0]),
+                    Category("Romance", list2[1]),
+                    Category("Ficção", list2[2]),
+                    Category("Aventura", list2[3]),
+                    Category("Animação", list2[4])
                 )
             }.collect { categorias ->
                 adapter.setData(categorias)
             }
         }
+
     }
 
     override fun onDestroyView() {
