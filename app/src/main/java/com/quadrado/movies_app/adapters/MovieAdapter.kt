@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.quadrado.movies_app.R
 import com.quadrado.movies_app.models.Movie
 
@@ -35,7 +36,14 @@ class MovieAdapter(
 
         holder.tvTitle.text = movie.title
         holder.tvRate.text = String.format("%.1f", movie.voteAverage ?: 0.0)
-        
+
+        val imageUrl = "https://image.tmdb.org/t/p/w185${movie.posterPath}"
+        Glide.with(holder.itemView.context)
+            .load(imageUrl)
+            .placeholder(R.drawable.landscape_placeholder_svgrepo_com)
+            .error(R.drawable.ic_error_warning_fill)
+            .into(holder.ivPoster)
+
         if ((movie.voteAverage ?: 0.0) <= 5) {
             holder.imgStar.setImageResource(R.drawable.ic_star_half_line)
         } else {
