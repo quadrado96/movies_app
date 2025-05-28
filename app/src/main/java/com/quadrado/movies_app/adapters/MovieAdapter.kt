@@ -50,9 +50,6 @@ class MovieAdapter(
             holder.imgStar.setImageResource(R.drawable.ic_star_fill)
         }
 
-        Log.d("MovieAdapter", "Movie: ${movie.title} - Vote: ${movie.voteAverage}")
-
-
         holder.btnFavorite.setOnClickListener {
             if(movie.favorited == false) {
                 movie.favorited = true

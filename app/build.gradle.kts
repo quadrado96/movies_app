@@ -60,6 +60,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.room.runtime.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
