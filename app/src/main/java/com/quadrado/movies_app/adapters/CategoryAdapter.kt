@@ -8,14 +8,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.quadrado.movies_app.R
 import com.quadrado.movies_app.models.Category
+import com.quadrado.movies_app.models.Movie
 
-class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(
+    var onFavoriteClick: ((Movie, Int) -> Unit)? = null
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    private var categoryList: List<Category> = emptyList()
+    private val categories = mutableListOf<Category>()
+
+    fun setData(newCategories: List<Category>) {
+        categories.clear()
+        categories.addAll(newCategories)
+        notifyDataSetChanged()
+    }
 
     inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvTitle: TextView = view.findViewById(R.id.tvCategoryTitle)
-        val rvMovies: RecyclerView = view.findViewById(R.id.rvMovies)
+        val title: TextView = view.findViewById(R.id.tvCategoryTitle)
+        val recycler: RecyclerView = view.findViewById(R.id.rvMovies)
+        var movieAdapter: MovieAdapter? = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
@@ -25,22 +35,23 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        val category = categoryList[position]
-        holder.tvTitle.text = category.title
+        val category = categories[position]
+        holder.title.text = category.title
+        holder.recycler.layoutManager = LinearLayoutManager(holder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
 
-        val movieAdapter = MovieAdapter(category.movies)
-        holder.rvMovies.layoutManager = LinearLayoutManager(
-            holder.itemView.context,
-            RecyclerView.HORIZONTAL,
-            false
-        )
-        holder.rvMovies.adapter = movieAdapter
+        val movieAdapter = MovieAdapter(category.movies.toMutableList()) { movie, moviePosition ->
+            onFavoriteClick?.invoke(movie, moviePosition)
+            holder.movieAdapter?.updateMovieAt(moviePosition, movie)
+        }
+
+        holder.movieAdapter = movieAdapter
+        holder.recycler.adapter = movieAdapter
     }
 
-    override fun getItemCount(): Int = categoryList.size
-
-    fun setData(categories: List<Category>) {
-        categoryList = categories
-        notifyDataSetChanged()
+    fun setFavoriteClickListener(listener: (Movie, Int) -> Unit) {
+        this.onFavoriteClick = listener
     }
+
+    override fun getItemCount(): Int = categories.size
 }
+

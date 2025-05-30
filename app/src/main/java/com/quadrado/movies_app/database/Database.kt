@@ -10,7 +10,7 @@ import com.quadrado.movies_app.database.entities.User
 
 @androidx.room.Database(
     entities = [User::class, FavoriteMovie::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class Database: RoomDatabase() {
@@ -33,7 +33,9 @@ abstract class Database: RoomDatabase() {
         private fun criaBanco(context: Context): Database? {
             return Room.databaseBuilder(
                 context, Database::class.java, DATABASE)
-                .allowMainThreadQueries().build()
+                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration(false)
+                .build()
         }
     }
 

@@ -1,20 +1,19 @@
 package com.quadrado.movies_app.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.quadrado.movies_app.R
 import com.quadrado.movies_app.models.Movie
 
 class MovieAdapter(
-    private val movies: List<Movie>
+    private val movies: MutableList<Movie>,
+    private val onFavoriteClick: (Movie, Int) -> Unit
 ) : RecyclerView.Adapter<MovieAdapter.MovieViewHolder>() {
 
     inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -50,25 +49,22 @@ class MovieAdapter(
             holder.imgStar.setImageResource(R.drawable.ic_star_fill)
         }
 
+        holder.btnFavorite.setImageResource(
+            if (movie.favorited == true)
+                R.drawable.ic_heart_fill
+            else
+                R.drawable.ic_heart_add_line
+        )
+
         holder.btnFavorite.setOnClickListener {
-            if(movie.favorited == false) {
-                movie.favorited = true
-                holder.btnFavorite.setImageResource(R.drawable.ic_heart_fill)
-                Toast.makeText(
-                    holder.itemView.context,
-                    "Salvo nos favoritos!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                movie.favorited = false
-                holder.btnFavorite.setImageResource(R.drawable.ic_heart_add_line)
-                Toast.makeText(
-                    holder.itemView.context,
-                    "Removido dos favoritos!",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            onFavoriteClick(movie, position)
         }
+
+    }
+
+    fun updateMovieAt(position: Int, movie: Movie) {
+        movies[position] = movie
+        notifyItemChanged(position)
     }
 
     override fun getItemCount(): Int = movies.size

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 val tmdbToken = project.findProperty("TMDB_API_TOKEN") as? String ?: ""
@@ -35,6 +36,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        languageVersion = "2.1"
+        apiVersion = "2.1"
     }
     buildFeatures {
         viewBinding = true
@@ -59,6 +62,9 @@ dependencies {
     implementation("com.squareup.moshi:moshi:1.15.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.1.0")
+    kapt("androidx.room:room-compiler:2.6.1")
+    kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.room.runtime.android)
 

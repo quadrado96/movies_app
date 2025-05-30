@@ -33,7 +33,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.fetchMovies(requireContext())
+
         val adapter = CategoryAdapter()
+        binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvCategories.adapter = adapter
+
+        adapter.setFavoriteClickListener { movie, position ->
+            viewModel.favoriteMovie(requireContext(), movie) { favorited ->
+                movie.favorited = favorited
+                adapter.notifyItemChanged(position)
+            }
+        }
+
         binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
         binding.rvCategories.adapter = adapter
 
@@ -73,9 +85,9 @@ class HomeFragment : Fragment() {
                 )
             }.collect { categorias ->
                 adapter.setData(categorias)
+
             }
         }
-
     }
 
     override fun onDestroyView() {

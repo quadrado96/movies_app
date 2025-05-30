@@ -1,8 +1,11 @@
 package com.quadrado.movies_app.ui.home
 
-import android.util.Log
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.quadrado.movies_app.database.Database
+import com.quadrado.movies_app.database.entities.FavoriteMovie
 import com.quadrado.movies_app.models.Movie
 import com.quadrado.movies_app.repository.MovieRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,20 +51,33 @@ class HomeViewModel : ViewModel() {
 
 
     init {
-        fetchMovies()
         fetchAllGenres()
     }
 
-    private fun fetchMovies() {
+    fun fetchMovies(context: Context) {
         viewModelScope.launch {
             try {
-                _topRatedMovies.value = repository.getTopRatedMovies().results
-                _nowPlayingMovies.value = repository.getNowPlayingMovies().results
-                _upcomingMovies.value = repository.getUpcomingMovies().results
-                _movies.value = repository.getPopularMovies().results
+                val topRated = repository.getTopRatedMovies().results
+                val nowPlaying = repository.getNowPlayingMovies().results
+                val upcoming = repository.getUpcomingMovies().results
+                val popular = repository.getPopularMovies().results
+
+                val db = Database.getInstance(context)
+                val favorites = db.favoriteMovieDAO().getAllFavorites()
+
+                fun List<Movie>.markFavorites(): List<Movie> {
+                    return this.onEach { movie ->
+                        movie.favorited = favorites.any { it.title == movie.title }
+                    }
+                }
+
+                _topRatedMovies.value = topRated.markFavorites(favorites)
+                _nowPlayingMovies.value = nowPlaying.markFavorites(favorites)
+                _upcomingMovies.value = upcoming.markFavorites(favorites)
+                _movies.value = popular.markFavorites(favorites)
+
             } catch (e: Exception) {
                 e.printStackTrace()
-
             }
         }
     }
@@ -90,4 +106,34 @@ class HomeViewModel : ViewModel() {
             }
         }
     }
+
+    fun favoriteMovie(context: Context, movie: Movie, onComplete: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val db = Database.getInstance(context)
+            val dao = db.favoriteMovieDAO()
+
+            if (movie.favorited == true) {
+                dao.removeFavorite(movie.toEntity())
+                onComplete(false)
+                Toast.makeText(context, "Removido dos favoritos :(", Toast.LENGTH_SHORT).show()
+            } else {
+                dao.addFavorite(movie.toEntity())
+                onComplete(true)
+                Toast.makeText(context, "Adicionado aos favoritos :D", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    suspend fun getFavoriteMoviesFromDB(context: Context): List<FavoriteMovie> {
+        val db = Database.getInstance(context)
+        val dao = db.favoriteMovieDAO()
+        return dao.getAllFavorites()
+    }
+
+    private fun List<Movie>.markFavorites(favorites: List<FavoriteMovie>): List<Movie> {
+        return this.onEach { movie ->
+            movie.favorited = favorites.any { it.movieId == movie.id }
+        }
+    }
+
 }
