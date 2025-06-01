@@ -27,6 +27,8 @@ class MovieRepository {
         return api.getUpcomingMovies()
     }
 
-
+    suspend fun searchMovies(query: String): MovieResponse {
+        return api.searchMovies(query)
+    }
 
 }
