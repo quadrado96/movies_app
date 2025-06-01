@@ -15,7 +15,7 @@ interface FavoriteMovieDAO {
     @Delete
     suspend fun removeFavorite(movie: FavoriteMovie)
 
-    @Query("SELECT * FROM favorite_movie")
+    @Query("SELECT * FROM favorite_movie ORDER BY title")
     suspend fun getAllFavorites(): List<FavoriteMovie>
 
 }

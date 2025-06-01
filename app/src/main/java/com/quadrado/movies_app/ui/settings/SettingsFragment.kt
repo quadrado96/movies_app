@@ -9,6 +9,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.quadrado.movies_app.FavoriteMoviesActivity
 import com.quadrado.movies_app.databinding.FragmentSettingsBinding
+import com.quadrado.movies_app.database.Database
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SettingsFragment : Fragment() {
 
@@ -24,17 +29,14 @@ class SettingsFragment : Fragment() {
         val root: View = binding.root
 
         setupListeners()
+        loadUserData()
 
         return root
     }
 
     private fun setupListeners() {
         binding.frmUser.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "abrir perfil",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), "abrir perfil", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnFavoritos.setOnClickListener {
@@ -43,22 +45,33 @@ class SettingsFragment : Fragment() {
         }
 
         binding.btnTema.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "opções de tema",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), "opções de tema", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnSobre.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "oiii",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), "oiii", Toast.LENGTH_SHORT).show()
         }
     }
 
+    private fun loadUserData() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val dao = Database.getInstance(requireContext()).userDAO()
+            val users = dao.getAllUsers()
+
+            if (users.isNotEmpty()) {
+                val user = users.first()
+                withContext(Dispatchers.Main) {
+                    binding.tvUser.text = user.username
+                    binding.tvEmail.text = user.email
+                }
+            } else {
+                withContext(Dispatchers.Main) {
+                    binding.tvUser.text = "Usuário não encontrado"
+                    binding.tvEmail.text = ""
+                }
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
