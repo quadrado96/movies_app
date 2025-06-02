@@ -1,5 +1,6 @@
 package com.quadrado.movies_app.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.quadrado.movies_app.MovieDetailsActivity
 import com.quadrado.movies_app.R
 import com.quadrado.movies_app.database.entities.FavoriteMovie
 
@@ -35,6 +37,13 @@ class FavoriteMovieAdapter(
             .placeholder(R.drawable.landscape_placeholder_svgrepo_com)
             .error(R.drawable.ic_error_warning_fill)
             .into(holder.imagePoster)
+
+        holder.itemView.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, MovieDetailsActivity::class.java)
+            intent.putExtra("movie_id", movie.movieId)
+            context.startActivity(intent)
+        }
 
     }
 

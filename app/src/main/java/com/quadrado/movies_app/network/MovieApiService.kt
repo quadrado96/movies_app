@@ -1,7 +1,9 @@
 package com.quadrado.movies_app.network
 
+import com.quadrado.movies_app.models.MovieDetails
 import com.quadrado.movies_app.models.MovieResponse
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApiService {
@@ -43,5 +45,10 @@ interface MovieApiService {
         @Query("language") language: String = "pt-BR"
     ): MovieResponse
 
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("language") language: String = "pt-BR"
+    ): MovieDetails
 
 }

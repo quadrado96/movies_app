@@ -36,8 +36,13 @@ class CategoryAdapter(
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categories[position]
+
         holder.title.text = category.title
-        holder.recycler.layoutManager = LinearLayoutManager(holder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
+        holder.recycler.layoutManager = LinearLayoutManager(
+            holder.itemView.context,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
 
         val movieAdapter = MovieAdapter(category.movies.toMutableList()) { movie, moviePosition ->
             onFavoriteClick?.invoke(movie, moviePosition)

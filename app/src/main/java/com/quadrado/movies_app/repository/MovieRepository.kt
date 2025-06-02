@@ -1,5 +1,6 @@
 package com.quadrado.movies_app.repository
 
+import com.quadrado.movies_app.models.MovieDetails
 import com.quadrado.movies_app.models.MovieResponse
 import com.quadrado.movies_app.network.ApiClient
 import com.quadrado.movies_app.network.MovieApiService
@@ -29,6 +30,10 @@ class MovieRepository {
 
     suspend fun searchMovies(query: String): MovieResponse {
         return api.searchMovies(query)
+    }
+
+    suspend fun getMovieDetails(movieId: Int): MovieDetails {
+        return api.getMovieDetails(movieId)
     }
 
 }
