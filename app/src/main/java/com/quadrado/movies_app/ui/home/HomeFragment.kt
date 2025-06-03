@@ -46,9 +46,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvCategories.adapter = adapter
-
         lifecycleScope.launch {
             val combine1 = combine(
                 viewModel.movies,
@@ -56,8 +53,8 @@ class HomeFragment : Fragment() {
                 viewModel.nowPlayingMovies,
                 viewModel.actionMovies,
                 viewModel.comedyMovies
-            ) { moviesList, topRatedList, nowPlayingList, actionList, comedyList ->
-                listOf(moviesList, topRatedList, nowPlayingList, actionList, comedyList)
+            ) { list1, list2, list3, list4, list5 ->
+                listOf(list1, list2, list3, list4, list5)
             }
 
             val combine2 = combine(
@@ -66,26 +63,55 @@ class HomeFragment : Fragment() {
                 viewModel.fictionMovies,
                 viewModel.adventureMovies,
                 viewModel.animationMovies
-            ) { horrorList, romanceList, fictionList, adventureList, animationList ->
-                listOf(horrorList, romanceList, fictionList, adventureList, animationList)
+            ) { list1, list2, list3, list4, list5 ->
+                listOf(list1, list2, list3, list4, list5)
             }
 
-            combine(combine1, combine2) { list1, list2 ->
+            val combine3 = combine(
+                viewModel.dramaMovies,
+                viewModel.documentaryMovies,
+                viewModel.crimeMovies,
+                viewModel.thrillerMovies,
+                viewModel.fantasyMovies
+            ) { list1, list2, list3, list4, list5 ->
+                listOf(list1, list2, list3, list4, list5)
+            }
+
+            val combine4 = combine(
+                viewModel.musicMovies,
+                viewModel.warMovies,
+                viewModel.westernMovies,
+                viewModel.historyMovies,
+                viewModel.familyMovies
+            ) { list1, list2, list3, list4, list5 ->
+                listOf(list1, list2, list3, list4, list5)
+            }
+
+            combine(combine1, combine2, combine3, combine4) { l1, l2, l3, l4 ->
                 listOf(
-                    Category("Filmes populares", list1[0]),
-                    Category("Mais Avaliados", list1[1]),
-                    Category("Em cartaz", list1[2]),
-                    Category("Ação", list1[3]),
-                    Category("Comédia", list1[4]),
-                    Category("Terror", list2[0]),
-                    Category("Romance", list2[1]),
-                    Category("Ficção", list2[2]),
-                    Category("Aventura", list2[3]),
-                    Category("Animação", list2[4])
+                    Category("Filmes Populares", l1[0]),
+                    Category("Mais Avaliados", l1[1]),
+                    Category("Em Cartaz", l1[2]),
+                    Category("Ação", l1[3]),
+                    Category("Comédia", l1[4]),
+                    Category("Terror", l2[0]),
+                    Category("Romance", l2[1]),
+                    Category("Ficção Científica", l2[2]),
+                    Category("Aventura", l2[3]),
+                    Category("Animação", l2[4]),
+                    Category("Drama", l3[0]),
+                    Category("Documentários", l3[1]),
+                    Category("Crime", l3[2]),
+                    Category("Suspense", l3[3]),
+                    Category("Fantasia", l3[4]),
+                    Category("Música", l4[0]),
+                    Category("Guerra", l4[1]),
+                    Category("Faroeste", l4[2]),
+                    Category("História", l4[3]),
+                    Category("Família", l4[4])
                 )
             }.collect { categorias ->
                 adapter.setData(categorias)
-
             }
         }
     }

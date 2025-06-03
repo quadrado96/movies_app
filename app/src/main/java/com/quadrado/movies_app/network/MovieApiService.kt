@@ -51,4 +51,27 @@ interface MovieApiService {
         @Query("language") language: String = "pt-BR"
     ): MovieDetails
 
+    @GET("discover/movie")
+    suspend fun getRecentReleases(
+        @Query("sort_by") sortBy: String = "release_date.desc",
+        @Query("release_date.lte") releaseDateLte: String,
+        @Query("language") language: String = "pt-BR",
+        @Query("page") page: Int = 1
+    ): MovieResponse
+
+    @GET("discover/movie")
+    suspend fun getMoviesByKeyword(
+        @Query("with_keywords") keyword: String,
+        @Query("language") language: String = "pt-BR",
+        @Query("page") page: Int = 1
+    ): MovieResponse
+
+    @GET("discover/movie")
+    suspend fun getMoviesByOriginalLanguage(
+        @Query("with_original_language") languageCode: String,
+        @Query("language") language: String = "pt-BR",
+        @Query("page") page: Int = 1
+    ): MovieResponse
+
+
 }

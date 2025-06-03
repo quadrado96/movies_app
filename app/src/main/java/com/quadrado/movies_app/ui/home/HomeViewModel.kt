@@ -49,6 +49,35 @@ class HomeViewModel : ViewModel() {
     private val _upcomingMovies = MutableStateFlow<List<Movie>>(emptyList())
     val upcomingMovies: StateFlow<List<Movie>> = _upcomingMovies
 
+    private val _dramaMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val dramaMovies: StateFlow<List<Movie>> = _dramaMovies
+
+    private val _documentaryMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val documentaryMovies: StateFlow<List<Movie>> = _documentaryMovies
+
+    private val _crimeMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val crimeMovies: StateFlow<List<Movie>> = _crimeMovies
+
+    private val _thrillerMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val thrillerMovies: StateFlow<List<Movie>> = _thrillerMovies
+
+    private val _fantasyMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val fantasyMovies: StateFlow<List<Movie>> = _fantasyMovies
+
+    private val _musicMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val musicMovies: StateFlow<List<Movie>> = _musicMovies
+
+    private val _warMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val warMovies: StateFlow<List<Movie>> = _warMovies
+
+    private val _westernMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val westernMovies: StateFlow<List<Movie>> = _westernMovies
+
+    private val _historyMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val historyMovies: StateFlow<List<Movie>> = _historyMovies
+
+    private val _familyMovies = MutableStateFlow<List<Movie>>(emptyList())
+    val familyMovies: StateFlow<List<Movie>> = _familyMovies
 
     init {
         fetchAllGenres()
@@ -85,21 +114,24 @@ class HomeViewModel : ViewModel() {
     private fun fetchAllGenres() {
         viewModelScope.launch {
             try {
-                val action = repository.getMoviesByGenre(28).results
-                val comedy = repository.getMoviesByGenre(35).results
-                val horror = repository.getMoviesByGenre(27).results
-                val romance = repository.getMoviesByGenre(10749).results
-                val fiction = repository.getMoviesByGenre(878).results
-                val animation = repository.getMoviesByGenre(16).results
-                val adventure = repository.getMoviesByGenre(12).results
+                _actionMovies.value = repository.getMoviesByGenre(28).results
+                _comedyMovies.value = repository.getMoviesByGenre(35).results
+                _horrorMovies.value = repository.getMoviesByGenre(27).results
+                _romanceMovies.value = repository.getMoviesByGenre(10749).results
+                _fictionMovies.value = repository.getMoviesByGenre(878).results
+                _animationMovies.value = repository.getMoviesByGenre(16).results
+                _adventureMovies.value = repository.getMoviesByGenre(12).results
 
-                _actionMovies.value = action
-                _comedyMovies.value = comedy
-                _horrorMovies.value = horror
-                _romanceMovies.value = romance
-                _fictionMovies.value = fiction
-                _animationMovies.value = animation
-                _adventureMovies.value = adventure
+                _dramaMovies.value = repository.getMoviesByGenre(18).results
+                _documentaryMovies.value = repository.getMoviesByGenre(99).results
+                _crimeMovies.value = repository.getMoviesByGenre(80).results
+                _thrillerMovies.value = repository.getMoviesByGenre(53).results
+                _fantasyMovies.value = repository.getMoviesByGenre(14).results
+                _musicMovies.value = repository.getMoviesByGenre(10402).results
+                _warMovies.value = repository.getMoviesByGenre(10752).results
+                _westernMovies.value = repository.getMoviesByGenre(37).results
+                _historyMovies.value = repository.getMoviesByGenre(36).results
+                _familyMovies.value = repository.getMoviesByGenre(10751).results
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -135,5 +167,4 @@ class HomeViewModel : ViewModel() {
             movie.favorited = favorites.any { it.movieId == movie.id }
         }
     }
-
 }
