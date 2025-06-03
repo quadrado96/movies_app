@@ -1,16 +1,17 @@
 package com.quadrado.movies_app.ui.search
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.quadrado.movies_app.R
+import com.quadrado.movies_app.adapters.FavoriteMovieAdapter
+import com.quadrado.movies_app.database.entities.FavoriteMovie
 import com.quadrado.movies_app.databinding.FragmentSearchBinding
+import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
@@ -18,6 +19,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var searchViewModel: SearchViewModel
+    private lateinit var movieAdapter: FavoriteMovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +33,13 @@ class SearchFragment : Fragment() {
     ): View {
         _binding = FragmentSearchBinding.inflate(inflater, container, false)
         searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
+
+        movieAdapter = FavoriteMovieAdapter()
+        binding.rvResults.adapter = movieAdapter
+        binding.rvResults.layoutManager = LinearLayoutManager(requireContext())
+
+        observeSearchResults()
+
         return binding.root
     }
 
@@ -52,6 +61,21 @@ class SearchFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    private fun observeSearchResults() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            searchViewModel.searchResults.collect { movies ->
+                val favoriteMovies = movies.map {
+                    FavoriteMovie(
+                        movieId = it.id,
+                        title = it.title,
+                        posterPath = it.posterPath ?: ""
+                    )
+                }
+                movieAdapter.setMovies(favoriteMovies)
+            }
+        }
     }
 
 

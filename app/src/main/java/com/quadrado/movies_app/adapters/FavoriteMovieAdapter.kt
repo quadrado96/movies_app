@@ -12,9 +12,15 @@ import com.quadrado.movies_app.MovieDetailsActivity
 import com.quadrado.movies_app.R
 import com.quadrado.movies_app.database.entities.FavoriteMovie
 
-class FavoriteMovieAdapter(
-    private val movies: List<FavoriteMovie>
-) : RecyclerView.Adapter<FavoriteMovieAdapter.MovieViewHolder>() {
+class FavoriteMovieAdapter : RecyclerView.Adapter<FavoriteMovieAdapter.MovieViewHolder>() {
+
+    private val movies = mutableListOf<FavoriteMovie>()
+
+    fun setMovies(newMovies: List<FavoriteMovie>) {
+        movies.clear()
+        movies.addAll(newMovies)
+        notifyDataSetChanged()
+    }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imagePoster: ImageView = itemView.findViewById(R.id.img_poster__)
@@ -44,7 +50,6 @@ class FavoriteMovieAdapter(
             intent.putExtra("movie_id", movie.movieId)
             context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount(): Int = movies.size

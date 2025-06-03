@@ -40,7 +40,9 @@ class FavoriteMoviesActivity : AppCompatActivity() {
                 .favoriteMovieDAO()
                 .getAllFavorites()
 
-            val adapter = FavoriteMovieAdapter(favoriteMoviesList)
+            val adapter = FavoriteMovieAdapter()
+            adapter.setMovies(favoriteMoviesList)
+
             recyclerView.adapter = adapter
         }
     }
