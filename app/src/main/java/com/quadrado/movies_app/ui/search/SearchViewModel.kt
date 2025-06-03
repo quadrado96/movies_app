@@ -25,4 +25,9 @@ class SearchViewModel : ViewModel() {
             }
         }
     }
+
+    fun clearResults() {
+        _searchResults.value = emptyList()
+    }
+
 }

@@ -78,6 +78,10 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        searchViewModel.clearResults()
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
