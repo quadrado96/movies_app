@@ -7,11 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.quadrado.movies_app.AccountActivity
 import com.quadrado.movies_app.FavoriteMoviesActivity
 import com.quadrado.movies_app.InfoActivity
+import com.quadrado.movies_app.R
 import com.quadrado.movies_app.databinding.FragmentSettingsBinding
 import com.quadrado.movies_app.database.Database
+import com.quadrado.movies_app.util.ThemeUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -48,7 +51,7 @@ class SettingsFragment : Fragment() {
         }
 
         binding.btnTema.setOnClickListener {
-            Toast.makeText(requireContext(), "opções de tema", Toast.LENGTH_SHORT).show()
+            showThemeSelector()
         }
 
         binding.btnSobre.setOnClickListener {
@@ -76,6 +79,39 @@ class SettingsFragment : Fragment() {
             }
         }
     }
+
+    private fun showThemeSelector() {
+        val bottomSheet = BottomSheetDialog(requireContext())
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_theme, null)
+        bottomSheet.setContentView(view)
+
+        view.findViewById<View>(R.id.btnTemaClaro).setOnClickListener {
+            ThemeUtils.setTheme(requireContext(), ThemeUtils.THEME_LIGHT)
+            bottomSheet.dismiss()
+            restartApp()
+        }
+
+        view.findViewById<View>(R.id.btnTemaEscuro).setOnClickListener {
+            ThemeUtils.setTheme(requireContext(), ThemeUtils.THEME_DARK)
+            bottomSheet.dismiss()
+            restartApp()
+        }
+
+        view.findViewById<View>(R.id.btnTemaSistema).setOnClickListener {
+            ThemeUtils.setTheme(requireContext(), ThemeUtils.THEME_SYSTEM)
+            bottomSheet.dismiss()
+            restartApp()
+        }
+
+        bottomSheet.show()
+    }
+
+    private fun restartApp() {
+        val intent = requireActivity().intent
+        requireActivity().finish()
+        startActivity(intent)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

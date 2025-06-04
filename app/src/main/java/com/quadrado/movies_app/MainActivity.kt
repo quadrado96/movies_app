@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.quadrado.movies_app.database.Database
 import com.quadrado.movies_app.databinding.ActivityMainBinding
+import com.quadrado.movies_app.util.ThemeUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        ThemeUtils.applyTheme(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

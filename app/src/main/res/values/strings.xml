@@ -12,5 +12,11 @@
     <string name="editar_email">Editar endereço de email</string>
     <string name="apagar_conta">Apagar conta</string>
 
+    <string name="claro">Claro</string>
+    <string name="escuro">Escuro</string>
+    <string name="sistema">Sistema</string>
+
+
+
 
 </resources>
