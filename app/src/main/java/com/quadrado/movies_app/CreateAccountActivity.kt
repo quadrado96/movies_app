@@ -45,7 +45,7 @@ class CreateAccountActivity : AppCompatActivity() {
                 Toast.makeText(this, "Todos os campos são obrigatórios!", Toast.LENGTH_SHORT).show()
             } else {
                 CoroutineScope(Dispatchers.IO).launch {
-                    val user = User(null, nome, email, senha)
+                    val user = User(1, nome, email, senha)
                     dao.insertUser(user)
 
                     runOnUiThread {

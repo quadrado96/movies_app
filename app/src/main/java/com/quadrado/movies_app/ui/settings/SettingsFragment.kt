@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.quadrado.movies_app.AccountActivity
 import com.quadrado.movies_app.FavoriteMoviesActivity
 import com.quadrado.movies_app.InfoActivity
 import com.quadrado.movies_app.databinding.FragmentSettingsBinding
@@ -37,7 +38,8 @@ class SettingsFragment : Fragment() {
 
     private fun setupListeners() {
         binding.frmUser.setOnClickListener {
-            Toast.makeText(requireContext(), "abrir perfil", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(), AccountActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnFavoritos.setOnClickListener {

@@ -10,7 +10,7 @@ import com.quadrado.movies_app.database.entities.User
 
 @androidx.room.Database(
     entities = [User::class, FavoriteMovie::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class Database: RoomDatabase() {

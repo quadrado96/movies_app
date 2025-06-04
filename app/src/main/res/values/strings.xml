@@ -7,4 +7,10 @@
     <string name="filmes_favoritos">Filmes favoritos</string>
     <string name="temas">temas</string>
     <string name="sobre_o_app">Sobre o app</string>
+
+    <string name="editar_user">Editar nome de usuário</string>
+    <string name="editar_email">Editar endereço de email</string>
+    <string name="apagar_conta">Apagar conta</string>
+
+
 </resources>
