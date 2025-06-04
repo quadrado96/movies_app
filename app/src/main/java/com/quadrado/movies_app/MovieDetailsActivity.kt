@@ -1,6 +1,7 @@
 package com.quadrado.movies_app
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -9,13 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
-import java.text.NumberFormat
-import java.text.SimpleDateFormat
-import java.util.*
 import com.bumptech.glide.Glide
+import com.quadrado.movies_app.database.Database
+import com.quadrado.movies_app.database.entities.FavoriteMovie
 import com.quadrado.movies_app.models.MovieDetails
 import com.quadrado.movies_app.repository.MovieRepository
 import kotlinx.coroutines.launch
+import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -31,6 +34,11 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var tvCountries: TextView
     private lateinit var tvRevenue: TextView
     private lateinit var tvBudget: TextView
+    private lateinit var btnSalvar: Button
+
+    private lateinit var dao: com.quadrado.movies_app.database.dao.FavoriteMovieDAO
+    private var isFavorite = false
+    private var currentMovie: MovieDetails? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +53,11 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        val db = Database.getInstance(this)
+        dao = db.favoriteMovieDAO()
+
+        bindViews()
+
         val movieId = intent.getIntExtra("movie_id", -1)
         if (movieId == -1) {
             Toast.makeText(this, "Filme inválido", Toast.LENGTH_SHORT).show()
@@ -52,7 +65,6 @@ class MovieDetailsActivity : AppCompatActivity() {
             return
         }
 
-        bindViews()
         fetchMovieDetails(movieId)
     }
 
@@ -69,18 +81,56 @@ class MovieDetailsActivity : AppCompatActivity() {
         tvCountries = findViewById(R.id.tv_countries)
         tvRevenue = findViewById(R.id.tv_revenue)
         tvBudget = findViewById(R.id.tv_budget)
+        btnSalvar = findViewById(R.id.btn_salvar_favorito)
     }
 
     private fun fetchMovieDetails(movieId: Int) {
         lifecycleScope.launch {
             try {
                 val movie = MovieRepository().getMovieDetails(movieId)
+                currentMovie = movie
+                checkIfFavorite(movie.id)
                 populateUI(movie)
+                setupFavoriteButton()
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(this@MovieDetailsActivity, "Erro ao carregar detalhes", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private suspend fun checkIfFavorite(movieId: Int) {
+        val favoritos = dao.getAllFavorites()
+        isFavorite = favoritos.any { it.movieId == movieId }
+    }
+
+    private fun setupFavoriteButton() {
+        updateFavoriteButtonText()
+        btnSalvar.setOnClickListener {
+            currentMovie?.let { movie ->
+                lifecycleScope.launch {
+                    val favoriteMovie = FavoriteMovie(
+                        movieId = movie.id,
+                        title = movie.title,
+                        posterPath = movie.posterPath ?: ""
+                    )
+                    if (isFavorite) {
+                        dao.removeFavorite(favoriteMovie)
+                        Toast.makeText(this@MovieDetailsActivity, "Removido dos favoritos", Toast.LENGTH_SHORT).show()
+                    } else {
+                        dao.addFavorite(favoriteMovie)
+                        Toast.makeText(this@MovieDetailsActivity, "Adicionado aos favoritos", Toast.LENGTH_SHORT).show()
+                    }
+                    isFavorite = !isFavorite
+                    updateFavoriteButtonText()
+                }
+            }
+        }
+    }
+
+    private fun updateFavoriteButtonText() {
+        val textRes = if (isFavorite) R.string.remover_favorito else R.string.salvar_favorito
+        btnSalvar.setText(textRes)
     }
 
     private fun populateUI(movie: MovieDetails) {
@@ -114,8 +164,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             .into(ivPoster)
     }
 
-
-    fun formatDate(input: String?): String {
+    private fun formatDate(input: String?): String {
         return try {
             val parser = SimpleDateFormat("yyyy-MM-dd", Locale.US)
             val formatter = SimpleDateFormat("dd/MM/yyyy", Locale("pt", "BR"))
@@ -125,14 +174,13 @@ class MovieDetailsActivity : AppCompatActivity() {
         }
     }
 
-    fun formatCurrency(value: Long?): String {
+    private fun formatCurrency(value: Long?): String {
         val formatter = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
         return formatter.format(value ?: 0)
     }
 
-    fun formatNumber(value: Int?): String {
+    private fun formatNumber(value: Int?): String {
         val formatter = NumberFormat.getIntegerInstance(Locale("pt", "BR"))
         return formatter.format(value ?: 0)
     }
-
 }

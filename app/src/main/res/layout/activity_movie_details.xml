@@ -114,5 +114,12 @@
             android:text="Orçamento: "
             android:layout_marginTop="4dp" />
 
+        <Button
+            android:id="@+id/btn_salvar_favorito"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/salvar_favorito"
+            android:layout_marginTop="5dp"/>
+
     </LinearLayout>
 </ScrollView>

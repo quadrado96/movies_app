@@ -16,7 +16,8 @@
     <string name="escuro">Escuro</string>
     <string name="sistema">Sistema</string>
 
-
+    <string name="salvar_favorito">SALVAR FAVORITO</string>
+    <string name="remover_favorito">REMOVER FAVORITO</string>
 
 
 </resources>
