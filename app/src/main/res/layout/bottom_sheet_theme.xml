@@ -9,17 +9,20 @@
         android:id="@+id/btnTemaClaro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/claro" />
+        android:text="@string/claro"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnTemaEscuro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/escuro" />
+        android:text="@string/escuro"
+        android:textColor="@color/white"/>
 
     <Button
         android:id="@+id/btnTemaSistema"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sistema" />
+        android:text="@string/sistema"
+        android:textColor="@color/white" />
 </LinearLayout>

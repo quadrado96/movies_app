@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="135dp"
     android:layout_height="wrap_content"
+    android:background="?android:windowBackground"
     android:orientation="vertical"
     android:padding="6dp">
 
@@ -14,16 +14,16 @@
             android:id="@+id/img_poster"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="#DDD" />
+            android:background="?attr/colorPrimaryVariant"
+            android:scaleType="centerCrop" />
 
         <ImageButton
             android:id="@+id/btn_favorito"
             android:layout_width="30dp"
             android:layout_height="44dp"
             android:layout_gravity="top|end"
-            android:background="#517BFA"
-            android:backgroundTint="#517BFA"
+            android:background="@color/azul_principal"
+            android:backgroundTint="@color/azul_principal"
             android:src="@drawable/ic_heart_add_line" />
     </FrameLayout>
 
@@ -39,6 +39,7 @@
         android:paddingEnd="4dp"
         android:text="Filme"
         android:textAlignment="viewStart"
+        android:textColor="?attr/colorOnBackground"
         android:textSize="14sp" />
 
     <FrameLayout
@@ -53,7 +54,7 @@
             android:paddingTop="3dp"
             android:text="9.9"
             android:textAlignment="viewEnd"
-            android:textColor="@color/amarelo"
+            android:textColor="?attr/colorOnTertiary"
             android:textSize="12sp" />
 
         <ImageView
@@ -61,8 +62,5 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_star_fill" />
-
     </FrameLayout>
-
-
 </LinearLayout>

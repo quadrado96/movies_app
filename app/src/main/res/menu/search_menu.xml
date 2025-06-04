@@ -5,6 +5,7 @@
         android:id="@+id/action_search"
         android:title="Buscar"
         android:icon="@android:drawable/ic_menu_search"
+        android:iconTint="@color/bottom_nav_icon_color"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="always|collapseActionView" />
 </menu>

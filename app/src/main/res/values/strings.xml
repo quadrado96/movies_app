@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">movies_app</string>
+    <string name="app_name">Movies App</string>
     <string name="title_home">Home</string>
     <string name="title_search">Buscar</string>
     <string name="title_settings">Configurações</string>

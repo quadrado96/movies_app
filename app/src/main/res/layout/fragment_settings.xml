@@ -31,7 +31,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_user_3_line"
-                app:tint="@color/white" />
+                app:tint="?attr/colorOnBackground" />
 
             <TextView
                 android:id="@+id/tv_user"
@@ -40,7 +40,7 @@
                 android:layout_marginStart="100dp"
                 android:layout_marginTop="30dp"
                 android:text="user"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorOnBackground"
                 android:textSize="20sp" />
 
             <TextView
@@ -68,10 +68,10 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:text="@string/filmes_favoritos"
                 android:textAlignment="viewStart"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorOnBackground"
                 app:icon="@drawable/ic_heart_fill"
 
-                app:iconTint="@color/white" />
+                app:iconTint="?attr/colorOnBackground" />
 
         </LinearLayout>
 
@@ -89,9 +89,9 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:text="@string/temas"
                 android:textAlignment="viewStart"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorOnBackground"
                 app:icon="@drawable/ic_moon_line"
-                app:iconTint="@color/white" />
+                app:iconTint="?attr/colorOnBackground" />
         </LinearLayout>
 
         <LinearLayout
@@ -108,9 +108,9 @@
                 android:foreground="?attr/selectableItemBackground"
                 android:text="@string/sobre_o_app"
                 android:textAlignment="viewStart"
-                android:textColor="@android:color/white"
+                android:textColor="?attr/colorOnBackground"
                 app:icon="@drawable/ic_information_line"
-                app:iconTint="@color/white" />
+                app:iconTint="?attr/colorOnBackground" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

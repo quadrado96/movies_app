@@ -20,7 +20,7 @@
         android:paddingStart="12dp"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/white"
+        android:textColor="?attr/colorOnBackground"
         android:maxLines="2"
         android:ellipsize="end" />
 </LinearLayout>

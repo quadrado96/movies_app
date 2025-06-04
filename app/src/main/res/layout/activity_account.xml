@@ -26,7 +26,7 @@
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
             android:src="@drawable/ic_user_3_line"
-            app:tint="@color/white" />
+            app:tint="?attr/colorOnBackground" />
 
         <TextView
             android:id="@+id/tv_user_account"
@@ -35,7 +35,7 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="15dp"
             android:text="user"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/colorOnBackground"
             android:textSize="20sp" />
 
         <TextView
@@ -67,7 +67,7 @@
             android:background="@android:color/transparent"
             android:foreground="?attr/selectableItemBackground"
             android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/colorOnBackground"
             android:paddingStart="20dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -84,10 +84,10 @@
             android:foreground="?attr/selectableItemBackground"
             android:text="@string/editar_user"
             android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/colorOnBackground"
             app:icon="@drawable/ic_edit_2_fill"
 
-            app:iconTint="@color/white" />
+            app:iconTint="?attr/colorOnBackground" />
 
         <Button
             android:id="@+id/btn_edit_email"
@@ -98,10 +98,10 @@
             android:foreground="?attr/selectableItemBackground"
             android:text="@string/editar_email"
             android:textAlignment="viewStart"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/colorOnBackground"
             app:icon="@drawable/ic_edit_2_fill"
 
-            app:iconTint="@color/white" />
+            app:iconTint="?attr/colorOnBackground" />
 
         <Button
             android:id="@+id/btn_delete_account"
