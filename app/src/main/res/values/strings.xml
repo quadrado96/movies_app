@@ -19,5 +19,61 @@
     <string name="salvar_favorito">SALVAR FAVORITO</string>
     <string name="remover_favorito">REMOVER FAVORITO</string>
 
+    <string name="about_institution">\nCENTRO UNIVERSITÁRIO MOURA LACERDA\n</string>
+    <string name="about_students">BRUNNO QUADRADO - 69154\nLEANDRO CAIRES SIQUEIRA - 4031555\n</string>
+
+    <string name="about_project_overview">
+        O Movies App é um app Android nativo em Kotlin que permite consultar informações de filmes: listagem, detalhes, busca e favoritos com persistência local. Também oferece criação básica de conta. Código disponível em: &lt;a href="https://github.com/quadrado96/movies_app"&gt;github.com/quadrado96/movies_app&lt;/a&gt;\n
+    </string>
+
+    <string name="about_project_overview2">
+        \nO projeto teve seu primeiro commit feito dia 20/05/2025 e o último feito no dia 05/06/2025, totalizando 30 commits e 16 dias de desenvolvimento.\n
+    </string>
+
+
+    <string name="about_technologies">
+        Desenvolvido com Kotlin, Android SDK (minSdk 24, targetSdk 35), Gradle (KTS), e Android Jetpack (Lifecycle, Navigation, Room, ViewModel), seguindo boas práticas modernas.\n
+    </string>
+
+
+    <string name="about_architecture">
+        O app segue a arquitetura MVVM, com camadas separadas (UI, ViewModel, Repository, DataSource). O padrão Repository abstrai o acesso a dados locais e de rede.\n
+    </string>
+
+
+    <string name="about_data_modeling">
+        Os dados são definidos por data classes Kotlin, anotadas para Moshi (JSON) e Room (SQLite), facilitando a integração com API e banco local.\n
+    </string>
+
+
+    <string name="about_networking">
+        Usa Retrofit para comunicação com a API TMDB (The Movie Database) e Moshi para conversão JSON. A chave da API é gerenciada via `buildConfigField` no Gradle.\n
+    </string>
+
+
+    <string name="about_persistence">
+        Room é utilizado para persistência local. Inclui entidades, DAOs e uma classe de banco de dados para gerenciar filmes favoritos.\n
+    </string>
+
+
+    <string name="about_ui">
+        A UI é construída com layouts XML, Material Design, ViewBinding e RecyclerView. Glide carrega imagens, e a navegação é gerenciada com Navigation.\n
+    </string>
+
+
+    <string name="about_features">
+        Funcionalidades: Listagem de filmes, Detalhes, Busca, Favoritos e Criação de Conta.\n
+    </string>
+
+    <string name="about_package_structure">
+        Pacotes:\n
+        - adapters: adaptadores de RecyclerView.\n
+        - database: persistência local com Room.\n
+        - models: data classes.\n
+        - network: comunicação com API.\n
+        - repository: interface de dados unificada.\n
+        - ui: interface e interação com usuário.
+    </string>
+
 
 </resources>
